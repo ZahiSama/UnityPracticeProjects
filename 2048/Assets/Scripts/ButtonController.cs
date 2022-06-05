@@ -5,37 +5,31 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    public static bool isGame;
+    public static bool isGame = false;
     private static Button button;
-    private static Text text;
-    private void Awake() {
-        isGame=false;
-    }
-    // Start is called before the first frame update
-    void Start(){
-        button =GetComponent<Button>();
-        text =this.GetComponentInChildren<Text>();
-        text.text ="Start";
-    }
+    public static Text text;
 
-    // Update is called once per frame
-    void Update(){
-        IsGameStart();
+    public bool S;
+    // Start is called before the first frame update
+    void Start()
+    {
+        S = isGame;
+        button = GetComponent<Button>();
+        text = this.GetComponentInChildren<Text>();
+        text.text = "Start";
+        button.onClick.AddListener(StartOrStopGame);
     }
-    public static void IsGameStart(){
-        if (isGame == false){
-            button.onClick.AddListener(StartGame);
+    //判断游戏是否开始
+    public static void StartOrStopGame()
+    {
+        if (isGame==false)
+        {
+            GameController.CreateBoard();
         }
-        if(isGame == true){
-            button.onClick.AddListener(StopGame);
+        else
+        {
+            GameController.ReloadBoard();
         }
-    }
-    public static void StartGame(){
-        isGame = true;
-        text.text ="Stop";
-    }
-    public static void StopGame(){
-        isGame = false;
-        text.text ="Start";
+
     }
 }
